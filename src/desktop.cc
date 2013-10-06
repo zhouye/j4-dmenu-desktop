@@ -34,14 +34,14 @@ void build_search_path(stringlist_t &search_path)
 {
     stringlist_t sp;
 
-    std::string xdg_data_home = get_variable("XDGDATA_HOME");
+    std::string xdg_data_home = "";
     if(xdg_data_home.empty())
         xdg_data_home = std::string(get_variable("HOME")) + "/.local/share/applications/";
 
     if(is_directory(xdg_data_home.c_str()))
         sp.push_back(xdg_data_home);
 
-    std::string xdg_data_dirs = get_variable("XDG_DATA_DIRS");
+    std::string xdg_data_dirs = "";
     if(xdg_data_dirs.empty())
         xdg_data_dirs = "/usr/local/share/applications/:/usr/share/applications/";
 
@@ -99,6 +99,7 @@ bool read_desktop_file(const char *filename, char *line, desktop_file_t &dft)
             switch(make_istring(key)) {
                 case "Name"_istr:
                     if(key[4] == '[') {
+                        continue;
                         // Don't ask, don't tell.
                         const char *langcode = key + 5;
                         const char *suffix;
@@ -110,8 +111,10 @@ bool read_desktop_file(const char *filename, char *line, desktop_file_t &dft)
                                 break;
                             }
                         }
-                    } else
+                    } else {
                         fallback_name = value;
+                        break;
+                    }
                     continue;
                 case "Exec"_istr:
                     dft.exec = value;

@@ -160,6 +160,7 @@ int main(int argc, char **argv)
 
     // Transfer the list to dmenu
     for(auto &app : apps) {
+        //std::cout << app.first << std::endl;
         write(dmenu_outpipe[1], app.first.c_str(), app.first.size());
         write(dmenu_outpipe[1], "\n", 1);
     }
