@@ -125,7 +125,7 @@ void find_files(const char *path, const char *name_suffix, file_cb cb)
         if(is_directory(pathspec)) {
             find_files(pathspec, name_suffix, cb);
         } else if(endswith(pathspec, name_suffix)) {
-            cb(pathspec);
+            cb(entry->d_name, pathspec);
         }
     }
 

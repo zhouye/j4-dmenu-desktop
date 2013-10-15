@@ -36,14 +36,19 @@ apps_t apps;
 int parsed_files = 0;
 char *buf;
 
-void file_callback(const char *filename)
+void file_callback(const char* entry, const char *filename)
 {
     desktop_file_t dft;
 
     if(read_desktop_file(filename, buf, dft))
+    {
         apps[dft.name] = dft;
-    else
-        apps.erase(dft.name);
+        dft.name = entry;
+        dft.name.erase(dft.name.length() - 8, 8);
+        apps[dft.name] = dft;
+    }
+    //else
+    //    apps.erase(dft.name);
 
     parsed_files++;
 }

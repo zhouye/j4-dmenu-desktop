@@ -28,7 +28,7 @@ typedef std::map<std::string, std::string> stringmap_t;
 typedef std::list<std::string> stringlist_t;
 typedef std::vector<char *> cstringlist_t;
 
-typedef void (*file_cb)(const char *file);
+typedef void (*file_cb)(const char*, const char *);
 
 void split(const std::string &str, char delimiter, stringlist_t &elems);
 std::pair<std::string, std::string> split(const std::string &str, const std::string &delimiter);
